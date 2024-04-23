@@ -1,7 +1,6 @@
-import ProfilePic from './ProfilePicture.jsx';
-
+import Counter from "./Counter.jsx";
 function App() {
-  return(<ProfilePic />)
+  return(<Counter />)
 }
 
 export default App;
