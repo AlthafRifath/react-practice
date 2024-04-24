@@ -2,60 +2,34 @@ import { useState } from 'react';
 
 function MyComponent() {
 
-    const [name, setName] = useState("Guest");
-    const [quanity, setQuanity] = useState(0);
-    const [comments, setComments] = useState("")
-    const [payment, setPayment] = useState("")
-    const [shipping, setShipping] = useState("")
+    const [count, setCount] = useState(0);
 
-    function handleNameChange(event) {
-        setName(event.target.value);
+    function increment() {
+
+        // Takes the PENDING state to calculate NEXT state.
+        // React puts your updater function in a queue (waiting line -> Data Structure)
+        // During the render, it will call them in the same order.
+
+        setCount(c => c + 1);
+        setCount(c => c + 1);
+        setCount(c => c + 1);
     }
 
-    function handleQuanityChange(event) {
-        setQuanity(event.target.value);
+    function decrement() {
+        setCount(c => c - 1);
+        setCount(c => c - 1);
+        setCount(c => c - 1);
     }
 
-    function handleCommentsChange(event) {
-        setComments(event.target.value);
-    }
-
-    function handlePaymentChange(event) {
-        setPayment(event.target.value);
-    }
-
-    function handleShippingChange(event) {
-        setShipping(event.target.value);
+    function reset() {
+        setCount(0);
     }
 
     return(<div>
-        <input type="text" value={name} onChange={handleNameChange}/>
-        <p>Name: {name}</p>
-
-        <input type="number" value={quanity} onChange={handleQuanityChange}/>
-        <p>Name: {quanity}</p>
-
-        <textarea value={comments} onChange={handleCommentsChange} placeholder="Enter Delivery Instructions"/>
-        <p>Comments: {comments}</p>
-
-        <select value={payment} onChange={handlePaymentChange}>
-            <option value="">Select an Option</option>
-            <option value="Credit Card">Credit Card</option>
-            <option value="Debit Card">Debit Card</option>
-            <option value="Paypal">Paypal</option>
-        </select>
-        <p>Payment: {payment}</p>
-
-        <label>
-            <input type="radio" value="Pick Up" checked={shipping === "Pick Up"} onChange={handleShippingChange}/>
-            Pickup
-        </label>
-        <br/>
-        <label>
-            <input type="radio" value="Delivery" checked={shipping === "Delivery"} onChange={handleShippingChange}/>
-            Delivery
-        </label>
-        <p>Shipping: {shipping}</p>
+        <h1>Count: {count}</h1>
+        <button onClick={increment}>Increment</button>
+        <button onClick={decrement}>Decrement</button>
+        <button onClick={reset}>Reset</button>
     </div>)
 }
 
