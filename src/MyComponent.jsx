@@ -1,68 +1,34 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function MyComponent() {
 
-    const [cars, setCars] = useState([]);
-    const [carYear, setCarYear] = useState(new Date().getFullYear());
-    const [carMake, setCarMake] = useState("");
-    const [carModel, setCarModel] = useState("");
+    const [width, setWidth] = useState(window.innerWidth);
+    const [height, setHeight] = useState(window.innerHeight);
 
-    function handleAddCar() {
+    function handleResize() {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+    }
 
-        const newCar = {
-            year: carYear,
-            make: carMake,
-            model: carModel
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+        console.log('Event Listener Added');
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            console.log('Event Listener Removed');
         }
+    }, []);
 
-        setCars(c => [...c, newCar])
-
-        setCarYear(new Date().getFullYear());
-        setCarMake("");
-        setCarModel("");
-
-    }
-
-    function handleRemoveCar(index) {
-
-        const newCars = cars.filter((car, i) => i !== index)
-
-        setCars(newCars)
-
-    }
-
-    function handleCarYearChange(event) {
-
-        setCarYear(event.target.value)
-
-    }
-
-    function handleCarMakeChange(event) {
-
-        setCarMake(event.target.value)
-
-    }
-
-    function handleCarModelChange(event) {
-
-        setCarModel(event.target.value)
-
-    }
+    useEffect(() => {
+        document.title = `Width: ${width} x Height: ${height}`;
+    }, [width, height]);
 
     return(<div>
-        <h2>List of Car Objects</h2>
-        <ul>
-            {cars.map((car, index) =>
-                <li key={index}>
-                    {car.year} {car.make} {car.model}
-                    <button onClick={() => handleRemoveCar(index)}>Remove Car</button>
-                </li>
-            )}
-        </ul>
-        <input type="number" value={carYear} onChange={handleCarYearChange}/><br/>
-        <input type="text" value={carMake} onChange={handleCarMakeChange} placeholder="Enter Car Make"/><br/>
-        <input type="text" value={carModel} onChange={handleCarModelChange} placeholder="Enter Car Model"/><br/>
-        <button onClick={handleAddCar}>Add Car</button>
+        <h1>Window Size</h1>
+        <p>Width: {width}px</p>
+        <p>Height: {height}px</p>
+
     </div>)
 }
 
