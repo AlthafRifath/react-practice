@@ -1,35 +1,48 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 function MyComponent() {
 
-    const [width, setWidth] = useState(window.innerWidth);
-    const [height, setHeight] = useState(window.innerHeight);
+    const inputRef1 = useRef(null);
+    const inputRef2 = useRef(null);
+    const inputRef3 = useRef(null);
 
-    function handleResize() {
-        setWidth(window.innerWidth);
-        setHeight(window.innerHeight);
+    useEffect(() => {
+        console.log("MyComponent rendered");
+    });
+
+    function handleClick1() {
+        inputRef1.current.focus();
+        inputRef1.current.value = "Hello, World!";
     }
 
-    useEffect(() => {
-        window.addEventListener('resize', handleResize);
-        console.log('Event Listener Added');
+    function handleClick2() {
+        inputRef2.current.focus();
+        inputRef2.current.style.backgroundColor = "yellow";
+    }
 
-        return () => {
-            window.removeEventListener('resize', handleResize);
-            console.log('Event Listener Removed');
-        }
-    }, []);
+    function handleClick3() {
+        inputRef3.current.focus();
+        inputRef3.current.style.backgroundColor = "lightblue";
+    }
 
-    useEffect(() => {
-        document.title = `Width: ${width} x Height: ${height}`;
-    }, [width, height]);
+    return(
+        <div>
+            <button onClick={handleClick1}>
+                Click me 1!
+            </button>
+            <input ref={inputRef1}/><br/>
 
-    return(<div>
-        <h1>Window Size</h1>
-        <p>Width: {width}px</p>
-        <p>Height: {height}px</p>
+            <button onClick={handleClick2}>
+                Click me 2!
+            </button>
+            <input ref={inputRef2}/><br/>
 
-    </div>)
+            <button onClick={handleClick3}>
+                Click me 3!
+            </button>
+            <input ref={inputRef3}/>
+        </div>
+    )
 }
 
 export default MyComponent;
